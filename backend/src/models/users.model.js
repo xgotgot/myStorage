@@ -2,24 +2,22 @@
 //
 // See http://mongoosejs.com/docs/models.html
 // for more of what you can do here.
-module.exports = function (app) {
+module.exports = function(app) {
   const modelName = 'users';
   const mongooseClient = app.get('mongooseClient');
-  const schema = new mongooseClient.Schema({
-  
-    email: { type: String, unique: true, lowercase: true },
-    password: { type: String },
-  
-  
-    auth0Id: { type: String },
-  
-    googleId: { type: String },
-  
-    facebookId: { type: String },
-  
-  }, {
-    timestamps: true
-  });
+  const schema = new mongooseClient.Schema(
+    {
+      displayName: { type: String },
+      email: { type: String, unique: true, lowercase: true },
+      password: { type: String },
+      auth0Id: { type: String },
+      googleId: { type: String },
+      facebookId: { type: String },
+    },
+    {
+      timestamps: true,
+    },
+  );
 
   // This is necessary to avoid model compilation errors in watch mode
   // see https://mongoosejs.com/docs/api/connection.html#connection_Connection-deleteModel
@@ -27,5 +25,4 @@ module.exports = function (app) {
     mongooseClient.deleteModel(modelName);
   }
   return mongooseClient.model(modelName, schema);
-
 };
